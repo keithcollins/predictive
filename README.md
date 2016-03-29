@@ -75,8 +75,9 @@ THEON: I’ve come to meet?
 | `characters_per_line`| Integer         | -                        | `-1` (no limit) | Limit the number of characters for each line. Will often cutoff sentences at weird places.
 | `words_per_line`     | Integer         | -                        | `-1` (no limit) | Limit the number of words for each line. Will often cutoff sentences at weird places.
 | `sentences_per_line` | Integer         | -                        | `-1` (no limit) | Number of lines of sentences for each line. Sentences will be terminated by defined punctuation (see below).
-| `punctuation`        | Array           | -                        | `[".","!","?"]`| Which characters should denote the end of a sentence.
-| `select_next`        | String          | -                        | `"random"`     | Which characters should denote the end of a sentence. See options below.
+| `punctuation`        | Array           | -                        | `[".","!","?"]` | Which characters should denote the end of a sentence.
+| `startwords`         | Array           | -                        | -               | An array of words to start each generated sentence with. If not defined, `predictive` will use the first word on each sentence in corpus.
+| `select_next`        | String          | -                        | `"random"`      | Which characters should denote the end of a sentence. See options below.
 
 
 ### `select_next` options:
