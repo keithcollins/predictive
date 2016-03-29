@@ -14,7 +14,7 @@ var options = {
     "text/got.txt",
   ],
   lines_to_output: 1,
-  characters_per_line: 2,
+  characters_per_line: 140,
   select_next: "random"
 }
 
