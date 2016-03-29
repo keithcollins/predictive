@@ -1,6 +1,8 @@
 # predictive
 Simple library for generating "predictive," ebooks-esque text using word pairs. This began as a rewrite of [nodeEbot](https://github.com/daveschumaker/nodeEbot), but dropped and added enough features to become its own thing.
 
+Add to your project's `package.json` or install with `npm install predictive`
+
 Play around with the options below in `demo.js` and run by typing `node demo`. This will use the included Seinfeld and Game of Thrones texts as a corpus.
 
 ### You could use it to make tweets:
