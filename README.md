@@ -74,7 +74,7 @@ Default: `"\n"`
 
 For an efficient and robust corpus, input text needs to be broken up into discrete lines. If you're inputting text with no line breaks, consider using punctuation here.
 
-`csv_field` String (required if you're inputting json file(s))
+`csv_field` String (required if you're inputting csv file(s))
 
 Default: `0`
 
