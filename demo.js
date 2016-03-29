@@ -6,7 +6,7 @@ var options = {
     "text/got.txt",
   ],
   lines_to_output: 10,
-  sentences_per_line: 2,
+  sentences_per_line: 3,
   select_next: "random"
 }
 

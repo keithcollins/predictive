@@ -1,6 +1,14 @@
 {
   "name": "predictive",
+  "main": "predictive.js",
   "version": "0.0.1",
+  "author": {
+    "name": "Keith Collins",
+    "url": "http://twitter.com/collinskeith"
+  },
+  "description": "Simple library for generating 'predictive,' ebooks-esque text using word pairs",
+  "homepage": "https://github.com/keithcollins/predictive",
+  "license": "MIT",
   "dependencies": {
     "d3": "*"
   }
