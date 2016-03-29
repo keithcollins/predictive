@@ -65,62 +65,21 @@ THEON: I’ve come to meet?
 
 ### Here are all the options
 
-`files` Array (required)
+| Option               | Type            | Required                 | Default         | Description  |
+| -------------------- |:---------------:|:------------------------:|:---------------:|:-------------|
+| `files`              | Array           | Yes                      | `null`          | The relative path to the text to input. Supports txt (recommended), csv and json. I haven't done much testing with csv or json. Should work though! Let me know.
+| `break_text_on`      | String          | If inputting txt file(s) | `"\n"`          | For an efficient and robust corpus, input text needs to be broken up into discrete lines. If you're inputting text with no line breaks, consider using punctuation here.
+| `csv_field`          | String          | If inputting csv file(s) | `0`             | The field in your csv file from which text should be ingested.
+| `json_field`         | String          | If inputting json file(s)| `0`             | The field in your json file from which text should be ingested. Your json input should probably be flat. 
+| `lines_to_output`    | Integer         | -                        | `10`            | Number of lines of generated text to output. Line breaks will be appended to outputted text.
+| `characters_per_line`| Integer         | -                        | `-1` (no limit) | Limit the number of characters for each line. Will often cutoff sentences at weird places.
+| `words_per_line`     | Integer         | -                        | `-1` (no limit) | Limit the number of words for each line. Will often cutoff sentences at weird places.
+| `sentences_per_line` | Integer         | -                        | `-1` (no limit) | Number of lines of sentences for each line. Sentences will be terminated by defined punctuation (see below).
+| `punctuation`        | Array           | -                        | `[".","!","?"]`| Which characters should denote the end of a sentence.
+| `select_next`        | String          | -                        | `"random"`     | Which characters should denote the end of a sentence. See options below.
 
-The relative path to the text to input. Supports txt (recommended), csv and json. I haven't done much testing with csv or json. Should work though! Let me know.
 
-`break_text_on` String (required if you're inputting txt file(s))
-Default: `"\n"`
-
-For an efficient and robust corpus, input text needs to be broken up into discrete lines. If you're inputting text with no line breaks, consider using punctuation here.
-
-`csv_field` String (required if you're inputting csv file(s))
-
-Default: `0`
-
-The field in your csv file from which text should be ingested.
-
-`json_field` String (required if you're inputting json file(s))
-
-Default: `0`
-
-The field in your json file from which text should be ingested. Your json input should probably be flat. 
-
-`lines_to_output` Integer
-
-Default: `10`
-
-Number of lines of generated text to output. Line breaks will be appended to outputted text.
-
-`characters_per_line` Integer
-
-Default: `-1` (which means no limit)
-
-Limit the number of characters for each line. Will often cutoff sentences at weird places.
-
-`words_per_line`  Integer
-
-Default: `-1` (which means no limit)
-
-Limit the number of words for each line. Will often cutoff sentences at weird places.
-
-`sentences_per_line`  Integer
-
-Default: `-1` (which means no limit)
-
-Number of lines of sentences for each line. Sentences will be terminated by defined punctuation (see below).
-
-`punctuation` Array
-
-Default: `[".","!","?"],`
-
-Which characters should denote the end of a sentence.
-
-`select_next` String
-
-Default: `"random"`
-
-Options:
+### `select_next` options:
 
 `"random"` (recommended) during line generation, selects the next word from an array of relevant word pairs at random.
 
