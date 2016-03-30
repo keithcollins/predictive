@@ -1,9 +1,10 @@
+var path = require('path');
 var predictive = require('./predictive');
 
 var options = {
   files: [
-    "text/seinfeld.txt",
-    "text/got.txt",
+    path.join(__dirname,"text/seinfeld.txt"),
+    path.join(__dirname,"text/got.txt")
   ],
   lines_to_output: 10,
   sentences_per_line: 3,

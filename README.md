@@ -8,12 +8,13 @@ Play around with the options below in `demo.js` and run by typing `node demo`. T
 ### You could use it to make tweets:
 
 ```js
+var path = require('path');
 var predictive = require('predictive');
 
 var options = {
   files: [
-    "text/seinfeld.txt",
-    "text/got.txt",
+    path.join(__dirname,"text/seinfeld.txt"),
+    path.join(__dirname,"text/got.txt")
   ],
   lines_to_output: 1,
   characters_per_line: 140,
@@ -33,12 +34,13 @@ JORAH: Ser Jorah Mormont of Bear Island. I served your father from his chess boa
 ### Or something bigger:
 
 ```js
+var path = require('path');
 var predictive = require('predictive');
 
 var options = {
   files: [
-    "text/seinfeld.txt",
-    "text/got.txt",
+    path.join(__dirname,"text/seinfeld.txt"),
+    path.join(__dirname,"text/got.txt")
   ],
   lines_to_output: 10,
   sentences_per_line: 3,

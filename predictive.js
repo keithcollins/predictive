@@ -1,5 +1,4 @@
 var fs = require('fs');
-var path = require('path');
 var d3 = require('d3');
 
 var predictive = {
@@ -26,7 +25,7 @@ var predictive = {
     });
     this.ingest(options.files,function(collection){
       self.startwords = (options.startwords) ? options.startwords : collection.startwords;
-      self.input_lines = collection.input_lines;
+      self.input_lines = self.clean_text(collection.input_lines);
       self.build_corpus(self.input_lines,function(pairs){
         self.wordpairs = pairs;
         var output = [];
@@ -47,8 +46,7 @@ var predictive = {
     var self = this;
     var collection = {input_lines:[],startwords:[]};
     files.forEach(function(file){
-      var filepath = path.join(__dirname, file);
-      var raw = fs.readFileSync(filepath, 'utf8');
+      var raw = fs.readFileSync(file, 'utf8');
       switch(self.get_file_type(file)) {
         case "txt":
           raw.split(self.break_text_on).forEach(function(d){
@@ -185,6 +183,36 @@ var predictive = {
       }
     }
     return line.join(" ");
+  },
+
+  // Decode HTML entities
+  // @param str String
+  // @return String
+  decode_html: function(str) {
+    return str.replace(/&#(\d+);/g, function(match, dec) {
+      return String.fromCharCode(dec);
+    });
+  },
+
+  // Clean up text and replace unicode
+  // @param input_lines Array
+  // @return Array
+  clean_text: function(input_lines) {
+    var self = this;
+    var cleaned_lines = [];
+    input_lines.forEach(function(line){
+      var str = self.decode_html(line).toString()
+        .replace(/(“|”|’)/g, function ($0){
+          var index = {
+            '“': '"',
+            '”': '"',
+            '’': "'"
+          };
+          return index[$0] != undefined ? index[$0] : $0;
+        });
+      cleaned_lines.push(str);
+    });
+    return cleaned_lines;
   },
 
   // Check a file extension
