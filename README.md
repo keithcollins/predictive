@@ -79,7 +79,7 @@ THEON: I’ve come to meet?
 | `sentences_per_line` | Integer         | -                        | `-1` (no limit) | Number of lines of sentences for each line. Sentences will be terminated by defined punctuation (see below).
 | `punctuation`        | Array           | -                        | `[".","!","?"]` | Which characters should denote the end of a sentence.
 | `startwords`         | Array           | -                        | -               | An array of words to start each generated sentence with. If not defined, `predictive` will use the first word on each sentence in corpus.
-| `select_next`        | String          | -                        | `"random"`      | Which characters should denote the end of a sentence. See options below.
+| `select_next`        | String          | -                        | `"random"`      | Method to use for selecting the next word in sentence generation. See options below.
 
 
 ### `select_next` options:
