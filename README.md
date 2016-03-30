@@ -8,7 +8,7 @@ Play around with the options below in `demo.js` and run by typing `node demo`. T
 ### You could use it to make tweets:
 
 ```js
-var predictive = require('./predictive');
+var predictive = require('predictive');
 
 var options = {
   files: [
@@ -33,7 +33,7 @@ JORAH: Ser Jorah Mormont of Bear Island. I served your father from his chess boa
 ### Or something bigger:
 
 ```js
-var predictive = require('./predictive');
+var predictive = require('predictive');
 
 var options = {
   files: [
