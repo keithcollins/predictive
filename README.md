@@ -1,5 +1,5 @@
 # predictive
-Simple library for generating "predictive," ebooks-esque text using word pairs. This began as a rewrite of [nodeEbot](https://github.com/daveschumaker/nodeEbot), but dropped and added enough features to become its own thing.
+Simple library for generating predictive, ebooks-esque text using word pairs. This began as a rewrite of [nodeEbot](https://github.com/daveschumaker/nodeEbot), but dropped and added enough features to become its own thing.
 
 Add to your project's `package.json` or install with `npm install predictive`
 
