@@ -1,5 +1,6 @@
 var fs = require('fs');
 var d3 = require('d3');
+var stopwords = require('./wordbank').stopwords;
 
 var predictive = {
   wordpairs: [],
@@ -14,6 +15,7 @@ var predictive = {
   csv_field: 0,
   select_next: "random",
   filter_stopwords: false,
+  non_stopword_threshold: 0,
 
   /**
    * Do text generation and send output to callback
@@ -76,20 +78,20 @@ var predictive = {
           break;
       }
     });
-    
+
     // todo: implement stopword filtering
-    if (this.filter_stopwords) {
-      var filtered_lines = [];
+    if (this.filter_stopwords) {    
+      var interesting_lines = [];    
       collection.input_lines.forEach(function(line){
-        var filtered_line = [];
+        var non_stopword_count = 0;
         line.split(" ").forEach(function(word){
-          if (wordbank.stopwords.indexOf(word) === -1) {
-            filtered_line.push(word);
-          }
+          if (stopwords.indexOf(word.toLowerCase()) === -1)
+            non_stopword_count += 1;
         });
-        filtered_lines.push(filtered_line.join(" "));
+        if (non_stopword_count >= self.non_stopword_threshold) 
+          interesting_lines.push(line);
       });
-      collection.input_lines = filtered_lines;
+      collection.input_lines = interesting_lines;
     }
 
     callback(collection);
@@ -274,14 +276,12 @@ var predictive = {
     var b = false;
 
     // by characters per line
-    if (this.characters_per_line > -1 && line.length >= this.characters_per_line) {
+    if (this.characters_per_line > -1 && line.length >= this.characters_per_line)
       b = true;
-    }
 
     // by words per line
-    if (this.words_per_line > -1 && line.split(" ").length >= this.words_per_line) {
+    if (this.words_per_line > -1 && line.split(" ").length >= this.words_per_line)
       b = true;
-    }
 
     // by sentences per line
     // there are reasons for not using regexp
@@ -290,9 +290,8 @@ var predictive = {
       end_count += (self.punctuation.indexOf(c) > -1) ? 1 : 0;
     });
 
-    if (this.sentences_per_line > -1 && end_count >= this.sentences_per_line) {
+    if (this.sentences_per_line > -1 && end_count >= this.sentences_per_line)
       b = true;
-    }
 
     return b;
   },
@@ -305,9 +304,8 @@ var predictive = {
    */
   is_verbatim: function(line) {
     var b = false;
-    if (this.input_lines.indexOf(line) > -1) {
+    if (this.input_lines.indexOf(line) > -1)
       b = true;
-    }
     return b;
   }
 

@@ -1,0 +1,94 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/Cellar/node/5.5.0/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@3.5.3
+3 info using node@v5.5.0
+4 verbose publish [ '.' ]
+5 silly cache add args [ '.', null ]
+6 verbose cache add spec .
+7 silly cache add parsed spec Result {
+7 silly cache add   raw: '.',
+7 silly cache add   scope: null,
+7 silly cache add   name: null,
+7 silly cache add   rawSpec: '.',
+7 silly cache add   spec: '/Users/kcollins2/Code/predictive',
+7 silly cache add   type: 'directory' }
+8 verbose addLocalDirectory /Users/kcollins2/.npm/predictive/0.0.1/package.tgz not in flight; packing
+9 info lifecycle predictive@0.0.1~prepublish: predictive@0.0.1
+10 silly lifecycle predictive@0.0.1~prepublish: no script for prepublish, continuing
+11 verbose tar pack [ '/Users/kcollins2/.npm/predictive/0.0.1/package.tgz',
+11 verbose tar pack   '/Users/kcollins2/Code/predictive' ]
+12 verbose tarball /Users/kcollins2/.npm/predictive/0.0.1/package.tgz
+13 verbose folder /Users/kcollins2/Code/predictive
+14 verbose addLocalTarball adding from inside cache /Users/kcollins2/.npm/predictive/0.0.1/package.tgz
+15 silly cache afterAdd predictive@0.0.1
+16 verbose afterAdd /Users/kcollins2/.npm/predictive/0.0.1/package/package.json not in flight; writing
+17 verbose afterAdd /Users/kcollins2/.npm/predictive/0.0.1/package/package.json written
+18 silly publish { name: 'predictive',
+18 silly publish   main: 'predictive.js',
+18 silly publish   version: '0.0.1',
+18 silly publish   author:
+18 silly publish    { name: 'Keith Collins',
+18 silly publish      url: 'http://twitter.com/collinskeith' },
+18 silly publish   description: 'Simple library for generating \'predictive,\' ebooks-esque text using word pairs',
+18 silly publish   homepage: 'https://github.com/keithcollins/predictive',
+18 silly publish   license: 'MIT',
+18 silly publish   dependencies: { d3: '*' },
+18 silly publish   readme: '# predictive\nSimple library for generating "predictive," ebooks-esque text using word pairs. This began as a rewrite of [nodeEbot](https://github.com/daveschumaker/nodeEbot), but dropped and added enough features to become its own thing.\n\nAdd to your project\'s `package.json` or install with `npm install predictive`\n\nPlay around with the options below in `demo.js` and run by typing `node demo`. This will use the included Seinfeld and Game of Thrones texts as a corpus.\n\n### You could use it to make tweets:\n\n```js\nvar predictive = require(\'./predictive\');\n\nvar options = {\n  files: [\n    "text/seinfeld.txt",\n    "text/got.txt",\n  ],\n  lines_to_output: 1,\n  characters_per_line: 140,\n  select_next: "random"\n}\n\npredictive.generate(options,function(text){\n  console.log(text);\n});\n```\n\nSample output:\n```\nJORAH: Ser Jorah Mormont of Bear Island. I served your father from his chess board.\n```\n\n### Or something bigger:\n\n```js\nvar predictive = require(\'./predictive\');\n\nvar options = {\n  files: [\n    "text/seinfeld.txt",\n    "text/got.txt",\n  ],\n  lines_to_output: 10,\n  sentences_per_line: 3,\n  select_next: "random"\n}\n\npredictive.generate(options,function(text){\n  console.log(text);\n});\n```\n\nSample output:\n\n```\nGEORGE: Why couldn\'t you have to help us here in New York Health Club]\nRAMSAY: Why? Winterfell is yours.\nSEPTA MORDANE: Enough!\nEXT. SANSA’S ROOM - MORNING\nELAINE: No, you don\'t wear the ribbon. We are travelling together. In each other’s company.\nSPARROW: A sinner comes before you with a squad of guardsmen to escort you to start a marriage. We are the lords of small matters here.\nELAINE: It isn\'t?\nJERRY: But see look at them..\nPHARMACIST: Did you make it up. That is why it is still laughing)\nTHEON: I’ve come to meet?\n```\n\n### Here are all the options\n\n| Option               | Type            | Required                 | Default         | Description  |\n| -------------------- |:---------------:|:------------------------:|:---------------:|:-------------|\n| `files`              | Array           | Yes                      | `null`          | The relative path to the text to input. Supports txt (recommended), csv and json. I haven\'t done much testing with csv or json. Should work though! Let me know.\n| `break_text_on`      | String          | If inputting txt file(s) | `"\\n"`          | For an efficient and robust corpus, input text needs to be broken up into discrete lines. If you\'re inputting text with no line breaks, consider using punctuation here.\n| `csv_field`          | String          | If inputting csv file(s) | `0`             | The field in your csv file from which text should be ingested.\n| `json_field`         | String          | If inputting json file(s)| `0`             | The field in your json file from which text should be ingested. Your json input should probably be flat. \n| `lines_to_output`    | Integer         | -                        | `10`            | Number of lines of generated text to output. Line breaks will be appended to outputted text.\n| `characters_per_line`| Integer         | -                        | `-1` (no limit) | Limit the number of characters for each line. Will often cutoff sentences at weird places.\n| `words_per_line`     | Integer         | -                        | `-1` (no limit) | Limit the number of words for each line. Will often cutoff sentences at weird places.\n| `sentences_per_line` | Integer         | -                        | `-1` (no limit) | Number of lines of sentences for each line. Sentences will be terminated by defined punctuation (see below).\n| `punctuation`        | Array           | -                        | `[".","!","?"]` | Which characters should denote the end of a sentence.\n| `startwords`         | Array           | -                        | -               | An array of words to start each generated sentence with. If not defined, `predictive` will use the first word on each sentence in corpus.\n| `select_next`        | String          | -                        | `"random"`      | Which characters should denote the end of a sentence. See options below.\n\n\n### `select_next` options:\n\n`"random"` (recommended) during line generation, selects the next word from an array of relevant word pairs at random.\n\n`"most_frequent"` during line generation, selects the next word from an array of relevant word pairs by the word that occurs most frequently after current one.\n\n`"least_frequent"` during line generation, selects the next word from an array of relevant word pairs by the word that occurs least frequently after current one.\n',
+18 silly publish   readmeFilename: 'README.md',
+18 silly publish   gitHead: '8e20dd1af9a5b6aa8289153a3aa442a693979a62',
+18 silly publish   _id: 'predictive@0.0.1',
+18 silly publish   scripts: {},
+18 silly publish   _shasum: '323217bad84cfdb11bbc3709152e0dc8a0ed06f3',
+18 silly publish   _from: '.' }
+19 verbose getPublishConfig undefined
+20 silly mapToRegistry name predictive
+21 silly mapToRegistry using default registry
+22 silly mapToRegistry registry https://registry.npmjs.org/
+23 silly mapToRegistry uri https://registry.npmjs.org/predictive
+24 verbose publish registryBase https://registry.npmjs.org/
+25 silly publish uploading /Users/kcollins2/.npm/predictive/0.0.1/package.tgz
+26 verbose request uri https://registry.npmjs.org/predictive
+27 verbose request sending authorization for write operation
+28 info attempt registry request try #1 at 5:35:36 PM
+29 verbose request using bearer token for auth
+30 verbose request id 15647563aecee78f
+31 http request PUT https://registry.npmjs.org/predictive
+32 http 403 https://registry.npmjs.org/predictive
+33 verbose headers { 'content-type': 'application/json',
+33 verbose headers   'cache-control': 'max-age=300',
+33 verbose headers   'content-length': '95',
+33 verbose headers   'accept-ranges': 'bytes',
+33 verbose headers   date: 'Tue, 29 Mar 2016 21:35:37 GMT',
+33 verbose headers   via: '1.1 varnish',
+33 verbose headers   connection: 'keep-alive',
+33 verbose headers   'x-served-by': 'cache-atl6223-ATL',
+33 verbose headers   'x-cache': 'MISS',
+33 verbose headers   'x-cache-hits': '0',
+33 verbose headers   'x-timer': 'S1459287337.067634,VS0,VE727' }
+34 verbose request invalidating /Users/kcollins2/.npm/registry.npmjs.org/predictive on PUT
+35 error publish Failed PUT 403
+36 verbose stack Error: "You cannot publish over the previously published version 0.0.1." : predictive
+36 verbose stack     at makeError (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:264:12)
+36 verbose stack     at CachingRegistryClient.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:252:14)
+36 verbose stack     at Request._callback (/usr/local/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:172:14)
+36 verbose stack     at Request.self.callback (/usr/local/lib/node_modules/npm/node_modules/request/request.js:198:22)
+36 verbose stack     at emitTwo (events.js:100:13)
+36 verbose stack     at Request.emit (events.js:185:7)
+36 verbose stack     at Request.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:1035:10)
+36 verbose stack     at emitOne (events.js:95:20)
+36 verbose stack     at Request.emit (events.js:182:7)
+36 verbose stack     at IncomingMessage.<anonymous> (/usr/local/lib/node_modules/npm/node_modules/request/request.js:962:12)
+37 verbose statusCode 403
+38 verbose pkgid predictive
+39 verbose cwd /Users/kcollins2/Code/predictive
+40 error Darwin 15.3.0
+41 error argv "/usr/local/Cellar/node/5.5.0/bin/node" "/usr/local/bin/npm" "publish"
+42 error node v5.5.0
+43 error npm  v3.5.3
+44 error code E403
+45 error "You cannot publish over the previously published version 0.0.1." : predictive
+46 error If you need help, you may report this error at:
+46 error     <https://github.com/npm/npm/issues>
+47 verbose exit [ 1, true ]
