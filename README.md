@@ -3,8 +3,6 @@ Simple library for generating predictive, ebooks-esque text using word pairs. Th
 
 Add to your project's `package.json` or install with `npm install predictive`
 
-Play around with the options below in `demo.js` and run by typing `node demo`.
-
 ### You could use it to make tweets:
 
 ```js
