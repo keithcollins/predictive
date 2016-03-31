@@ -46,7 +46,7 @@ var predictive = {
   /**
    * Ingest lines and startwords from raw file inputs
    *
-   * @param {string[]} files - Array of paths to input files.
+   * @param {Array} files - Array of paths to input files.
    * @param {callback2} callback - Send ingested collection, object with two arrays.
    * @todo impement stopword filtering.
    */
@@ -98,7 +98,7 @@ var predictive = {
   /**
    * Break inputted lines into word pairs
    *
-   * @param {string[]} input_lines - Array of inputted sentences.
+   * @param {Array} input_lines - Array of inputted sentences.
    * @param {callback3} callback - Send resulting wordparis, array of objects.
    */
   build_corpus: function(input_lines,callback) {
@@ -232,8 +232,8 @@ var predictive = {
   /**
    * Clean up text and replace unicode
    *
-   * @param {string[]} input_lines - Array of inputted sentences.
-   * @returns {string[]} - Array of cleaned sentences
+   * @param {Array} input_lines - Array of inputted sentences.
+   * @returns {Array} - Array of cleaned sentences
    */
   clean_text: function(input_lines) {
     var self = this;
