@@ -3,7 +3,7 @@ Simple library for generating predictive, ebooks-esque text using word pairs. Th
 
 Add to your project's `package.json` or install with `npm install predictive`
 
-Play around with the options below in `demo.js` and run by typing `node demo`. This will use the included Seinfeld and Game of Thrones texts as a corpus.
+Once the package is installed, try the code below to generate some text, using the included Seinfeld and Game of Thrones texts as a corpus.
 
 ### You could use it to make tweets:
 
