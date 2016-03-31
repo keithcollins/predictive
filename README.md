@@ -3,19 +3,19 @@ Simple library for generating predictive, ebooks-esque text using word pairs. Th
 
 Add to your project's `package.json` or install with `npm install predictive`
 
-Once the package is installed, try the code below to generate some text, using the included Seinfeld and Game of Thrones texts as a corpus.
+Play around with the options below in `demo.js` and run by typing `node demo`.
 
 ### You could use it to make tweets:
 
 ```js
-var path = require('path');
 var predictive = require('predictive');
 
 var options = {
   files: [
-    path.join(__dirname,"text/seinfeld.txt"),
-    path.join(__dirname,"text/got.txt")
+    "path/to/text1.txt",
+    "path/to/text2.txt"
   ],
+  break_text_on: "\n",
   lines_to_output: 1,
   characters_per_line: 140,
   select_next: "random"
@@ -26,7 +26,8 @@ predictive.generate(options,function(text){
 });
 ```
 
-Sample output:
+Sample output, using Seinfeld and Game of Thrones scripts as text inputs (see `examples` folder):
+
 ```
 JORAH: Ser Jorah Mormont of Bear Island. I served your father from his chess board.
 ```
@@ -34,14 +35,14 @@ JORAH: Ser Jorah Mormont of Bear Island. I served your father from his chess boa
 ### Or something bigger:
 
 ```js
-var path = require('path');
 var predictive = require('predictive');
 
 var options = {
   files: [
-    path.join(__dirname,"text/seinfeld.txt"),
-    path.join(__dirname,"text/got.txt")
+    "path/to/text1.txt",
+    "path/to/text2.txt"
   ],
+  break_text_on: "\n",
   lines_to_output: 10,
   sentences_per_line: 3,
   select_next: "random"
@@ -52,7 +53,7 @@ predictive.generate(options,function(text){
 });
 ```
 
-Sample output:
+Sample output, again using Seinfeld and Game of Thrones scripts as text inputs:
 
 ```
 GEORGE: Why couldn't you have to help us here in New York Health Club]

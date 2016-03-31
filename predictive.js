@@ -13,10 +13,14 @@ var predictive = {
   json_field: 0,
   csv_field: 0,
   select_next: "random",
+  filter_stopwords: false,
 
-  // Do text generation and send output to callback
-  // @param options Object
-  // @param callback Function
+  /**
+   * Do text generation and send output to callback
+   *
+   * @param {Object} options - User-defined options.
+   * @param {callback1} callback - Send generated text, string.
+   */
   generate: function(options,callback) {
     var self = this;
     var params = Object.keys(options);
@@ -39,9 +43,13 @@ var predictive = {
     });
   },
 
-  // Ingest lines and startwords from raw file inputs
-  // @param files Array
-  // @param callback Function
+  /**
+   * Ingest lines and startwords from raw file inputs
+   *
+   * @param {string[]} files - Array of paths to input files.
+   * @param {callback2} callback - Send ingested collection, object with two arrays.
+   * @todo impement stopword filtering.
+   */
   ingest: function(files,callback) {
     var self = this;
     var collection = {input_lines:[],startwords:[]};
@@ -68,12 +76,31 @@ var predictive = {
           break;
       }
     });
+    
+    // todo: implement stopword filtering
+    if (this.filter_stopwords) {
+      var filtered_lines = [];
+      collection.input_lines.forEach(function(line){
+        var filtered_line = [];
+        line.split(" ").forEach(function(word){
+          if (wordbank.stopwords.indexOf(word) === -1) {
+            filtered_line.push(word);
+          }
+        });
+        filtered_lines.push(filtered_line.join(" "));
+      });
+      collection.input_lines = filtered_lines;
+    }
+
     callback(collection);
   },
 
-  // Break inputted lines into word pairs
-  // @param input_lines Array
-  // @param callback Function
+  /**
+   * Break inputted lines into word pairs
+   *
+   * @param {string[]} input_lines - Array of inputted sentences.
+   * @param {callback3} callback - Send resulting wordparis, array of objects.
+   */
   build_corpus: function(input_lines,callback) {
     var wordpairs = [];
     input_lines.forEach(function(line,l){
@@ -101,13 +128,15 @@ var predictive = {
     callback(wordpairs);
   },
 
-  // Determine next word(s) to add to current line
-  // @param first_word String
-  // @param second_word String
-  // @return String
+  /**
+   * Determine next word(s) to add to current sentence
+   *
+   * @param {string} first_word - Second to last word in current sentence.
+   * @param {string} second_word - Last word in current sentence.
+   * @returns {string} - New word to be added to sentence.
+   */
   get_next_word: function(first_word,second_word) {
-    // Note: first_word and second_word are last two words of current line
-
+    
     // search by first_word prop if we only have one word
     // that means it's the first word in new sentence
     var property = 'first_word',
@@ -156,8 +185,11 @@ var predictive = {
     return result;
   },
 
-  // Create a line
-  // @return String
+  /**
+   * Create a line
+   *
+   * @returns {string} - New sentence to be added to output.
+   */
   create_line: function() {
     var new_words;
 
@@ -185,18 +217,24 @@ var predictive = {
     return line.join(" ");
   },
 
-  // Decode HTML entities
-  // @param str String
-  // @return String
+  /**
+   * Decode HTML entities
+   *
+   * @param {string} str
+   * @returns {string} - Clean string
+   */
   decode_html: function(str) {
     return str.replace(/&#(\d+);/g, function(match, dec) {
       return String.fromCharCode(dec);
     });
   },
 
-  // Clean up text and replace unicode
-  // @param input_lines Array
-  // @return Array
+  /**
+   * Clean up text and replace unicode
+   *
+   * @param {string[]} input_lines - Array of inputted sentences.
+   * @returns {string[]} - Array of cleaned sentences
+   */
   clean_text: function(input_lines) {
     var self = this;
     var cleaned_lines = [];
@@ -215,16 +253,22 @@ var predictive = {
     return cleaned_lines;
   },
 
-  // Check a file extension
-  // @param filename String
-  // @return String
+  /**
+   * Get file extension
+   *
+   * @param {string} filename - A filename with an extension.
+   * @returns {string} - Just the extension.
+   */
   get_file_type: function(filename) {
     return filename.split(".")[filename.split(".").length-1];
   },
 
-  // Should line stop collecting words?
-  // @param line String
-  // @return Boolean
+  /**
+   * Should sentence stop collecting words?
+   *
+   * @param {string} line - Current sentence.
+   * @returns {Boolean}
+   */
   is_end: function(line) {
     var self = this;
     var b = false;
@@ -253,9 +297,12 @@ var predictive = {
     return b;
   },
 
-  // Is line exact match of any line in corpus?
-  // @param line String
-  // @return Boolean
+  /**
+   * Is line exact match of any line in corpus?
+   *
+   * @param {string} line - Current sentence.
+   * @returns {Boolean}
+   */
   is_verbatim: function(line) {
     var b = false;
     if (this.input_lines.indexOf(line) > -1) {

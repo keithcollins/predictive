@@ -1,7 +1,7 @@
 {
   "name": "predictive",
   "main": "predictive.js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "author": {
     "name": "Keith Collins",
     "url": "http://twitter.com/collinskeith"
